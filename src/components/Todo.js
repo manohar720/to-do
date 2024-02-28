@@ -1,7 +1,6 @@
 import React from "react";
 
 import { useState, useEffect } from "react";
-import { InputAlert } from "./InputAlert";
 
 //get local data and update to  todolist
 function getDataAndUpdate() {
@@ -13,10 +12,6 @@ function getDataAndUpdate() {
     return [];
   }
 }
-// function getCheckBoxId() {
-//   const strId = localStorage.getItem("checkBoxId");
-//   console.log("strId: ", strId);
-// }
 
 function Todo() {
   let [inputText, setinputText] = useState("");
@@ -24,8 +19,6 @@ function Todo() {
   let [todoList, setTodoList] = useState(getDataAndUpdate());
 
   let [editId, setEditId] = useState("");
-  let [alertNotify, setAlertNotify] = useState();
-  console.log("alertNotify: ", alertNotify);
 
   const addBtn = document.getElementById("myBtn");
 
@@ -35,12 +28,14 @@ function Todo() {
     setinputText(getValue);
   };
 
-  const addList = () => {
-    if (addBtn.innerText == "Add") {
+  const addList = (e) => {
+    if (e.target.innerText === "Add") {
+      var error = document.getElementById("error");
       if (inputText === "") {
-        alert("please enter input field");
-        setAlertNotify("hi");
+        error.textContent = "Please enter a input";
+        error.style.color = "red";
       } else {
+        error.textContent = "";
         let newtodoItems = {
           taskName: inputText,
         };
@@ -50,12 +45,11 @@ function Todo() {
         updatedTodoArray.push(newtodoItems);
 
         setTodoList(updatedTodoArray);
+
         setinputText("");
       }
     } else {
       let list = [...todoList];
-
-      //list[editId].taskName;
 
       list.splice(editId, 1, { taskName: inputText });
       setTodoList(list);
@@ -84,15 +78,12 @@ function Todo() {
 
     addBtn.innerText = "Save Change";
 
-    //editlist.splice(id, 1, { taskName: "manohar" });
-
     setTodoList(editlist);
     setEditId(id);
   }
   function handleChecked(e, index) {
     if (e.target.checked === true) {
       console.log("checked");
-      //setCheckId(index);
     } else console.log("unchecked");
   }
 
@@ -106,12 +97,12 @@ function Todo() {
           onChange={handleInputText}
           value={inputText}
         ></input>
+
         <button className="addBtn" id="myBtn" type="button" onClick={addList}>
           Add
         </button>
-
-        {/* <InputAlert /> */}
       </div>
+      <p id="error"></p>
 
       <hr />
       <div className="table-container">
