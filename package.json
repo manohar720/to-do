@@ -1,5 +1,6 @@
 {
   "name": "to-do",
+  "homepage": "https://manohar720.github.io/to-do",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
