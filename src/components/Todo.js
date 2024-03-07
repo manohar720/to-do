@@ -14,7 +14,8 @@ function getDataAndUpdate() {
 }
 
 function Todo() {
-  let [inputText, setinputText] = useState("");
+  let [todoTitle, setTodoTitle] = useState("");
+  let [todoDescription, setTodoDescription] = useState("");
 
   let [todoList, setTodoList] = useState(getDataAndUpdate());
 
@@ -25,36 +26,40 @@ function Todo() {
   const handleInputText = function (event) {
     let getValue = event.target.value;
 
-    setinputText(getValue);
+    setTodoTitle(getValue);
   };
 
   const addList = (e) => {
     if (e.target.innerText === "Add") {
       var error = document.getElementById("error");
-      if (inputText === "") {
+      if (todoTitle === "" || todoDescription === "") {
         error.textContent = "Please enter a input";
         error.style.color = "red";
       } else {
         error.textContent = "";
         let newtodoItems = {
-          taskName: inputText,
+          taskName: todoTitle,
+          discription: todoDescription,
         };
 
-        let updatedTodoArray = [...todoList];
+        let updatedTodo = [...todoList];
 
-        updatedTodoArray.push(newtodoItems);
+        updatedTodo.push(newtodoItems);
 
-        setTodoList(updatedTodoArray);
+        setTodoList(updatedTodo);
 
-        setinputText("");
+        setTodoTitle("");
+        setTodoDescription("");
       }
     } else {
       let list = [...todoList];
 
-      list.splice(editId, 1, { taskName: inputText });
+      list.splice(editId, 1, { taskName: todoTitle });
+      list.splice(editId, 1, { discription: todoDescription });
       setTodoList(list);
       addBtn.innerText = "Add";
-      setinputText("");
+      setTodoTitle("");
+      setTodoDescription("");
     }
   };
 
@@ -68,76 +73,99 @@ function Todo() {
 
     setTodoList(reducelist);
     addBtn.innerText = "Add";
-    setinputText("");
+    setTodoTitle("");
   }
   function editItem(id) {
+    console.log("id: ", id);
+
     const editlist = [...todoList];
     const getTaskName = editlist[id].taskName;
+    const getDiscription = editlist[id].discription;
+    console.log(" getDiscription: ", getDiscription);
 
-    setinputText(getTaskName);
+    setTodoTitle(getTaskName);
+    setTodoDescription(getDiscription);
 
     addBtn.innerText = "Save Change";
 
     setTodoList(editlist);
+
     setEditId(id);
-  }
-  function handleChecked(e, index) {
-    if (e.target.checked === true) {
-      console.log("checked");
-    } else console.log("unchecked");
   }
 
   return (
     <>
       <div className="form">
-        <input
-          className="inputBox"
-          type="text"
-          placeholder="take a note"
-          onChange={handleInputText}
-          value={inputText}
-        ></input>
-
-        <button className="addBtn" id="myBtn" type="button" onClick={addList}>
+        <div className="mb-3">
+          <label for="formGroupExampleInput" className="form-label">
+            Title
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="formGroupExampleInput"
+            placeholder="Type a task title"
+            onChange={handleInputText}
+            value={todoTitle}
+          />
+        </div>
+        <div className="mb-3">
+          <label for="formGroupExampleInput2" className="form-label">
+            Discription
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="formGroupExampleInput2"
+            placeholder="Type a task discription"
+            onChange={(e) => {
+              setTodoDescription(e.target.value);
+            }}
+            value={todoDescription}
+          />
+        </div>
+        <button
+          type="button"
+          className="addBtn btn btn-primary"
+          id="myBtn"
+          onClick={addList}
+        >
           Add
         </button>
       </div>
       <p id="error"></p>
 
       <hr />
-      <div className="table-container">
+      <div className="table-container table-danger">
         <table>
           <thead>
             <tr>
-              <th>SL No.</th>
-              <th>Task Name</th>
-              <th>Checklist</th>
-              <th>Action</th>
+              <th width="10%">SL No.</th>
+              <th width="20%">Task Name</th>
+              <th width="45%">Discription</th>
+              <th width="25%">Action</th>
             </tr>
           </thead>
           <tbody>
             {todoList.map((item, index) => {
+              console.log("item: ", item);
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.taskName}</td>
+                  <td>{item.discription}</td>
                   <td>
-                    <input
-                      type="checkbox"
-                      name="checklist"
-                      onClick={(e) => handleChecked(e, index)}
-                    />
-                  </td>
-                  <td>
-                    <button
-                      className="deleteBtn"
+                    <i
+                      className="delete-icon"
+                      class="fa-solid fa-trash mx-2"
                       onClick={() => deleteItem(index)}
-                    >
-                      del
-                    </button>
-                    <button className="editBtn" onClick={() => editItem(index)}>
-                      edit
-                    </button>
+                    ></i>
+
+                    <i
+                      className="edit"
+                      class="fa-solid fa-pen-to-square mx-2"
+                      onClick={() => editItem(index)}
+                    ></i>
                   </td>
                 </tr>
               );

@@ -85,3 +85,6 @@ table {
 .name {
   font-size: xx-small;
 }
+i {
+  cursor: pointer;
+}
