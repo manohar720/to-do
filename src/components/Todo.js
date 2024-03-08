@@ -81,7 +81,6 @@ function Todo() {
     const editlist = [...todoList];
     const getTaskName = editlist[id].taskName;
     const getDiscription = editlist[id].discription;
-    console.log(" getDiscription: ", getDiscription);
 
     setTodoTitle(getTaskName);
     setTodoDescription(getDiscription);
@@ -95,46 +94,6 @@ function Todo() {
 
   return (
     <>
-      <div className="form">
-        <div className="mb-3">
-          <label for="formGroupExampleInput" className="form-label">
-            Title
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="formGroupExampleInput"
-            placeholder="Type a task title"
-            onChange={handleInputText}
-            value={todoTitle}
-          />
-        </div>
-        <div className="mb-3">
-          <label for="formGroupExampleInput2" className="form-label">
-            Discription
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="formGroupExampleInput2"
-            placeholder="Type a task discription"
-            onChange={(e) => {
-              setTodoDescription(e.target.value);
-            }}
-            value={todoDescription}
-          />
-        </div>
-        <button
-          type="button"
-          className="addBtn btn btn-primary"
-          id="myBtn"
-          onClick={addList}
-        >
-          Add
-        </button>
-      </div>
-      <p id="error"></p>
-
       <hr />
       <div className="table-container table-danger">
         <table>

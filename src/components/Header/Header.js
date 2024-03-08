@@ -8,7 +8,7 @@ export default function Header(props) {
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
-            Todo
+            {props.taskTitle}
           </a>
           <button
             class="navbar-toggler"
