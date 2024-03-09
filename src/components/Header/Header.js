@@ -1,10 +1,6 @@
 export default function Header(props) {
   return (
     <>
-      {/* <header className="App-header">
-        {props.title}
-        <p className="name">devloped by Murli Manohar</p>
-      </header> */}
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">

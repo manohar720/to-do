@@ -1,10 +1,9 @@
-import Todo from "./components/Todo";
 import Header from "./components/Header/Header";
 import "./App.css";
 import { Form } from "./components/Form";
 import { useState, useEffect } from "react";
 import { ListItems } from "./components/ListItems";
-function getDataAndUpdate() {
+function getDataFromLocal() {
   const strData = localStorage.getItem("data");
 
   if (strData) {
@@ -18,20 +17,19 @@ function App() {
   let [todoTitle, setTodoTitle] = useState("");
   let [todoDescription, setTodoDescription] = useState("");
 
-  let [todoList, setTodoList] = useState(getDataAndUpdate());
+  let [todoList, setTodoList] = useState(getDataFromLocal());
 
   let [editId, setEditId] = useState("");
 
   const addBtn = document.getElementById("myBtn");
+  var error = document.getElementById("error");
 
   const addList = (e) => {
     if (e.target.innerText === "Add") {
-      var error = document.getElementById("error");
       if (todoTitle === "" || todoDescription === "") {
         error.textContent = "Please enter a input";
         error.style.color = "red";
       } else {
-        error.textContent = "";
         let newtodoItems = {
           taskName: todoTitle,
           discription: todoDescription,
@@ -46,11 +44,15 @@ function App() {
         setTodoTitle("");
         setTodoDescription("");
       }
+      //if innerText of button is  save then
     } else {
       let list = [...todoList];
 
-      list.splice(editId, 1, { taskName: todoTitle });
-      list.splice(editId, 1, { discription: todoDescription });
+      list.splice(editId, 1, {
+        taskName: todoTitle,
+        discription: todoDescription,
+      });
+
       setTodoList(list);
       addBtn.innerText = "Add";
       setTodoTitle("");
@@ -69,10 +71,9 @@ function App() {
     setTodoList(delList);
     addBtn.innerText = "Add";
     setTodoTitle("");
+    setTodoDescription("");
   }
   function editItem(id) {
-    console.log("id: ", id);
-
     const editlist = [...todoList];
     const getTaskName = editlist[id].taskName;
     const getDiscription = editlist[id].discription;
@@ -80,7 +81,7 @@ function App() {
     setTodoTitle(getTaskName);
     setTodoDescription(getDiscription);
 
-    addBtn.innerText = "Save Change";
+    addBtn.innerText = "Save";
 
     setTodoList(editlist);
 
@@ -93,10 +94,21 @@ function App() {
       <Form
         titleValue={todoTitle}
         discriptionValue={todoDescription}
-        onChangeTitle={(e) => setTodoTitle(e.target.value)}
-        onChangeDiscription={(e) => setTodoDescription(e.target.value)}
+        onChangeTitle={(e) => {
+          setTodoTitle(e.target.value);
+          {
+            error.textContent = "";
+          }
+        }}
+        onChangeDiscription={(e) => {
+          setTodoDescription(e.target.value);
+          {
+            error.textContent = "";
+          }
+        }}
         addList={addList}
       />
+      <span id="error"></span>
       <ListItems
         todoList={todoList}
         deleteItem={deleteItem}

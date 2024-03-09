@@ -6,8 +6,8 @@ export const Form = ({
   addList,
 }) => {
   return (
-    <div className="form d-flex gap">
-      <div className="mb-3">
+    <div className="form d-flex gap bg-success text-white">
+      <div className="mb-3 mx-2">
         <label for="formGroupExampleInput" className="form-label fw-bold">
           Title
         </label>
@@ -20,7 +20,7 @@ export const Form = ({
           value={titleValue}
         />
       </div>
-      <div className="mb-3">
+      <div className="mb-3 mx-2">
         <label for="formGroupExampleInput2" className="form-label fw-bold">
           Discription
         </label>
@@ -33,15 +33,16 @@ export const Form = ({
           value={discriptionValue}
         />
       </div>
-      <button
-        type="button"
-        className="addBtn btn btn-primary"
-        id="myBtn"
-        onClick={addList}
-      >
-        Add
-      </button>
-      <p id="error"></p>
+      <div className="mt-3">
+        <button
+          type="button"
+          className="addBtn btn btn-primary "
+          id="myBtn"
+          onClick={addList}
+        >
+          Add
+        </button>
+      </div>
     </div>
   );
 };
