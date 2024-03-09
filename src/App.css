@@ -63,7 +63,7 @@ td {
   border: 1px solid;
 }
 table {
-  width: 60%;
+  width: 40%;
   font-size: 15px;
 }
 .deleteBtn {
@@ -78,10 +78,10 @@ table {
   border-radius: 5px;
   height: 25px;
 }
-.table-container {
+/* .table-container {
   display: flex;
   justify-content: center;
-}
+} */
 .name {
   font-size: xx-small;
 }

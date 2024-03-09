@@ -3,6 +3,7 @@ import "./App.css";
 import { Form } from "./components/Form";
 import { useState, useEffect } from "react";
 import { ListItems } from "./components/ListItems";
+import { TypeWriter } from "./components/TypeWriter";
 function getDataFromLocal() {
   const strData = localStorage.getItem("data");
 
@@ -90,7 +91,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header taskTitle="Todo" />
+      <Header taskTitle="Todo App" />
       <Form
         titleValue={todoTitle}
         discriptionValue={todoDescription}
@@ -109,6 +110,7 @@ function App() {
         addList={addList}
       />
       <span id="error"></span>
+
       <ListItems
         todoList={todoList}
         deleteItem={deleteItem}
